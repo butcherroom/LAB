@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e54e297a-f501-4e05-8cfb-b407968c9463" name="SFTP-192.168.100.100">
+        <fileTransfer rootFolder="/python-study" accessType="SFTP" host="192.168.100.100" port="22" sshConfigId="9b39956a-5af7-40bc-a3a8-13f7a39613b1" sshConfig="root@192.168.100.100:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
