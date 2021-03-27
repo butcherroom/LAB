@@ -17,7 +17,7 @@ def compare_config_diff(ip,username,password,cmd,port):
     while True:
         device_config = get_config(ip,username,password,cmd,port)
         m = hashlib.md5()
-        m.update(str(device_config).encode())
+        m.update(device_config.encode())
         device_md5 = m.hexdigest()
         print(device_md5)
         if not before_md5:
