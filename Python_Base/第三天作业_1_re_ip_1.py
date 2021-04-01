@@ -10,7 +10,7 @@ if_show = re.match(r'(\d{0,5})\s+(\w{4}\.\w{4}\.\w{4})\s+(\w+)\s+(\w+/\d+/\d+)',
 # print('类型\t:',if_show[2])
 # print('状态\t\t:',if_show[3])
 
-#######################f-string##########################
+#######################f-string###########################
 vid_info = 'Vlan'
 mac_info  = 'MAC'
 type_info = 'Type'
